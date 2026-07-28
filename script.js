@@ -316,20 +316,20 @@ btn.disabled=true;
 
 btn.innerHTML="Sending...";
 
-const data={
+const data = {
 
-name:document.getElementById("name").value,
+name: document.getElementById("rsvp-name").value.trim(),
 
-mobile:document.getElementById("mobile").value,
+mobile: document.getElementById("rsvp-mobile").value.trim(),
 
-guests:document.getElementById("guests").value,
+guests: document.getElementById("rsvp-guests").value,
 
-events:document.getElementById("events").value,
+events: document.getElementById("rsvp-attending").value,
 
-message:document.getElementById("message").value
+message: document.getElementById("rsvp-message").value.trim()
 
 };
-
+   
 try{
 
 await fetch(WEB_APP_URL,{
