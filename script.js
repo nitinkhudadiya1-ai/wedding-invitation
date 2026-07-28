@@ -329,16 +329,19 @@ document.getElementById("rsvp-form").addEventListener("submit", async function (
 
     try {
 
-const response = await fetch(WEB_APP_URL, {
+await fetch(WEB_APP_URL, {
     method: "POST",
-    redirect: "follow",
+    mode: "no-cors",
     headers: {
         "Content-Type": "text/plain;charset=utf-8"
     },
     body: JSON.stringify(data)
 });
 
-const result = JSON.parse(await response.text());
+// no-cors me response read nahi kar sakte
+btn.innerHTML = "✓ RSVP Confirmed";
+btn.classList.add("success");
+this.reset();
 
         if (result.status === "success") {
 
