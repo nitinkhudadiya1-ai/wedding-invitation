@@ -329,19 +329,16 @@ document.getElementById("rsvp-form").addEventListener("submit", async function (
 
     try {
 
-        const response = await fetch(WEB_APP_URL, {
+const response = await fetch(WEB_APP_URL, {
+    method: "POST",
+    redirect: "follow",
+    headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(data)
+});
 
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify(data)
-
-        });
-
-        const result = await response.json();
+const result = JSON.parse(await response.text());
 
         if (result.status === "success") {
 
