@@ -304,19 +304,16 @@ document.addEventListener('click', e => {
 
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxdXatmHsSf8ctI6tbqblq-VDIKko8XC_Jn5hCBTNB5IJhKmShLAlifYawipFZc3TbkBw/exec";
 
-const WEB_APP_URL="YOUR_WEBAPP_URL";
+document.getElementById("rsvp-form").addEventListener("submit", async function (e) {
 
-document.getElementById("rsvp-form").addEventListener("submit",async function(e){
+    e.preventDefault();
 
-e.preventDefault();
+    const btn = this.querySelector(".btn-submit");
 
-const btn=this.querySelector("button");
+    btn.innerHTML = "Sending...";
+    btn.disabled = true;
 
-btn.disabled=true;
-
-btn.innerHTML="Sending...";
-
-const data = {
+   const data = {
 
 name: document.getElementById("rsvp-name").value.trim(),
 
@@ -329,41 +326,50 @@ events: document.getElementById("rsvp-attending").value,
 message: document.getElementById("rsvp-message").value.trim()
 
 };
-   
-try{
 
-await fetch(WEB_APP_URL,{
+    try {
 
-method:"POST",
-
-mode:"no-cors",
-
-headers:{
-
-"Content-Type":"text/plain"
-
-},
-
-body:JSON.stringify(data)
-
+    const response = await fetch(WEB_APP_URL, {
+    method: "POST",
+    redirect: "follow",
+    headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(data)
 });
 
-btn.innerHTML="✓ RSVP Confirmed";
+const result = JSON.parse(await response.text());
 
-this.reset();
+        if (result.status === "success") {
 
-}
-catch(e){
+            btn.innerHTML = "✓ RSVP Confirmed";
+            btn.classList.add("success");
 
-console.log(e);
+            this.reset();
 
-btn.innerHTML="Send RSVP";
+        } else {
 
-alert("Connection Error");
+            alert("Submission Failed");
 
-}
+        }
 
-btn.disabled=false;
+    } catch (err) {
+
+        console.error(err);
+
+        alert("Connection Error");
+
+    }
+
+    setTimeout(() => {
+
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send RSVP';
+
+        btn.disabled = false;
+
+        btn.classList.remove("success");
+
+    },3000);
 
 });
 
