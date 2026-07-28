@@ -304,75 +304,66 @@ document.addEventListener('click', e => {
 
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxdXatmHsSf8ctI6tbqblq-VDIKko8XC_Jn5hCBTNB5IJhKmShLAlifYawipFZc3TbkBw/exec";
 
-document.getElementById("rsvp-form").addEventListener("submit", async function (e) {
+const WEB_APP_URL="YOUR_WEBAPP_URL";
 
-    e.preventDefault();
+document.getElementById("rsvp-form").addEventListener("submit",async function(e){
 
-    const btn = this.querySelector(".btn-submit");
+e.preventDefault();
 
-    btn.innerHTML = "Sending...";
-    btn.disabled = true;
+const btn=this.querySelector("button");
 
-    const data = {
+btn.disabled=true;
 
-        name: document.getElementById("rsvp-name").value,
+btn.innerHTML="Sending...";
 
-        mobile: document.getElementById("rsvp-mobile").value,
+const data={
 
-        guests: document.getElementById("rsvp-guests").value,
+name:document.getElementById("name").value,
 
-        events: document.getElementById("rsvp-attending").value,
+mobile:document.getElementById("mobile").value,
 
-        message: document.getElementById("rsvp-message").value
+guests:document.getElementById("guests").value,
 
-    };
+events:document.getElementById("events").value,
 
-    try {
+message:document.getElementById("message").value
 
-await fetch(WEB_APP_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-    },
-    body: JSON.stringify(data)
+};
+
+try{
+
+await fetch(WEB_APP_URL,{
+
+method:"POST",
+
+mode:"no-cors",
+
+headers:{
+
+"Content-Type":"text/plain"
+
+},
+
+body:JSON.stringify(data)
+
 });
 
-// no-cors me response read nahi kar sakte
-btn.innerHTML = "✓ RSVP Confirmed";
-btn.classList.add("success");
+btn.innerHTML="✓ RSVP Confirmed";
+
 this.reset();
 
-   
+}
+catch(e){
 
-            btn.innerHTML = "✓ RSVP Confirmed";
-            btn.classList.add("success");
+console.log(e);
 
-            this.reset();
+btn.innerHTML="Send RSVP";
 
-        } else {
+alert("Connection Error");
 
-            alert("Submission Failed");
+}
 
-        }
-
-    } catch (err) {
-
-        console.error(err);
-
-        alert("Connection Error");
-
-    }
-
-    setTimeout(() => {
-
-        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send RSVP';
-
-        btn.disabled = false;
-
-        btn.classList.remove("success");
-
-    },3000);
+btn.disabled=false;
 
 });
 
