@@ -343,7 +343,7 @@ btn.innerHTML = "✓ RSVP Confirmed";
 btn.classList.add("success");
 this.reset();
 
-        if (result.status === "success") {
+   
 
             btn.innerHTML = "✓ RSVP Confirmed";
             btn.classList.add("success");
